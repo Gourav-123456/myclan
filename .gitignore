@@ -1,160 +1,203 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+from tkinter import *
+from tkinter import ttk
+import mysql.connector
 
-# C extensions
-*.so
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+class ClanData:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("My CLAN")
+        self.root.geometry("1350x700+0+0")
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+        title = Label(self.root, text="By Gourav", bd=5, relief=RIDGE, font=("times new roman", 40, "bold"), bg="#17F5AE")
+        title.pack(side=TOP, fill=X)
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+        self.Id_var = StringVar()
+        self.Username_var = StringVar()
+        self.Tier_var = StringVar()
+        self.Level_var = StringVar()
+        self.Achivements_var = StringVar()
+        self.Popularity_var = StringVar()
+        self.Likes_var = StringVar()
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+        entry_manage_Frame1 = Frame(self.root, bd=4, relief=RIDGE, bg="crimson")
+        entry_manage_Frame1.place(x=20, y=100, width=450, height=575)
 
-# Translations
-*.mo
-*.pot
+        fm1_title = Label(entry_manage_Frame1, text="Manage Clan", bg="crimson", fg="white", font=("times new roman", 30, "bold"))
+        fm1_title.grid(row=0, columnspan=2, pady=20)
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+        lbl_Id = Label(entry_manage_Frame1, text="Id", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Id.grid(row=1, column=0, pady=5, padx=20, sticky=W)
 
-# Flask stuff:
-instance/
-.webassets-cache
+        txt_Id = Entry(entry_manage_Frame1, textvariable=self.Id_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Id.grid(row=1, column=1, pady=10, padx=20, sticky=W)
 
-# Scrapy stuff:
-.scrapy
+        lbl_Username = Label(entry_manage_Frame1, text="Username", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Username.grid(row=2, column=0, pady=5, padx=20, sticky=W)
 
-# Sphinx documentation
-docs/_build/
+        txt_Username = Entry(entry_manage_Frame1, textvariable=self.Username_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Username.grid(row=2, column=1, pady=10, padx=20, sticky=W)
 
-# PyBuilder
-.pybuilder/
-target/
+        lbl_Tier = Label(entry_manage_Frame1, text="Tier", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Tier.grid(row=3, column=0, pady=5, padx=20, sticky=W)
 
-# Jupyter Notebook
-.ipynb_checkpoints
+        txt_Tier = Entry(entry_manage_Frame1, textvariable=self.Tier_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Tier.grid(row=3, column=1, pady=10, padx=20, sticky=W)
 
-# IPython
-profile_default/
-ipython_config.py
+        lbl_Level = Label(entry_manage_Frame1, text="Level", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Level.grid(row=4, column=0, pady=5, padx=20, sticky=W)
 
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
+        txt_Level = Entry(entry_manage_Frame1, textvariable=self.Level_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Level.grid(row=4, column=1, pady=10, padx=20, sticky=W)
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+        lbl_Achivements = Label(entry_manage_Frame1, text="Achivements", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Achivements.grid(row=5, column=0, pady=5, padx=20, sticky=W)
 
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
+        txt_Achivements = Entry(entry_manage_Frame1, textvariable=self.Achivements_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Achivements.grid(row=5, column=1, pady=10, padx=20, sticky=W)
 
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/#use-with-ide
-.pdm.toml
+        lbl_Popularity = Label(entry_manage_Frame1, text="Popularity", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Popularity.grid(row=6, column=0, pady=5, padx=20, sticky=W)
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
+        txt_Popularity = Entry(entry_manage_Frame1, textvariable=self.Popularity_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Popularity.grid(row=6, column=1, pady=10, padx=20, sticky=W)
 
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
+        lbl_Likes = Label(entry_manage_Frame1, text="Likes", bg="crimson", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Likes.grid(row=7, column=0, pady=5, padx=20, sticky=W)
 
-# SageMath parsed files
-*.sage.py
+        txt_Likes = Entry(entry_manage_Frame1,textvariable=self.Likes_var, font=("times new roman", 15, "bold"), bd=5, relief=SUNKEN)
+        txt_Likes.grid(row=7, column=1, pady=10, padx=20, sticky=W)
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+        # button frame----------------->
+        btn_Frame = Frame(entry_manage_Frame1, bd=4, relief=RIDGE, bg="crimson")
+        btn_Frame.place(x=15, y=500, width=420)
 
-# Spyder project settings
-.spyderproject
-.spyproject
+        Addbtn = Button(btn_Frame, text="Add", width=10, command=self.add_members).grid(row=0, column=0, padx=10, pady=10)
+        updatebtn = Button(btn_Frame, text="Update", width=10, command=self.update_data).grid(row=0, column=1, padx=10, pady=10)
+        deletebtn = Button(btn_Frame, text="Delete", width=10, command=self.delete_data).grid(row=0, column=2, padx=10, pady=10)
+        clearbtn = Button(btn_Frame, text="Clear", width=10, command=self.clear).grid(row=0, column=3, padx=10, pady=10)
 
-# Rope project settings
-.ropeproject
+        data_manage_Frame2 = Frame(self.root, bd=4, relief=RIDGE, bg="red")
+        data_manage_Frame2.place(x=500, y=100, width=800, height=575)
 
-# mkdocs documentation
-/site
+        lbl_Search = Label(data_manage_Frame2, text="Search", bg="red", fg="white", font=("times new roman", 20, "bold"))
+        lbl_Search.grid(row=0, column=0, pady=10, padx=15, sticky=W)
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+        combo_Search = ttk.Combobox(data_manage_Frame2, font=("times new roman", 13, "bold"), state='readonly')
+        combo_Search['value'] = ("Id", "Username")
+        combo_Search.grid(row=0, column=1, padx=15, pady=10)
 
-# Pyre type checker
-.pyre/
+        txt_Search = Entry(data_manage_Frame2, font=("times new roman", 15, "bold"), bd=3, relief=SUNKEN)
+        txt_Search.grid(row=0, column=2, pady=10, padx=15, sticky=W)
 
-# pytype static type analyzer
-.pytype/
+        Search_btn = Button(data_manage_Frame2, text="Search", width=10, pady=5).grid(row=0, column=3, padx=10, pady=10)
+        showall_btn = Button(data_manage_Frame2, text="Show All", width=10, pady=5).grid(row=0, column=4, padx=10, pady=10)
 
-# Cython debug symbols
-cython_debug/
+        Tabel_Frame = Frame(data_manage_Frame2, bd=4, relief=RIDGE, bg="crimson")
+        Tabel_Frame.place(x=15, y=70, width=760, height=495)
 
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+        scroll_x = Scrollbar(Tabel_Frame, orient=HORIZONTAL)
+        scroll_y = Scrollbar(Tabel_Frame, orient=VERTICAL)
+        self.clan_tabel = ttk.Treeview(Tabel_Frame, columns=("Id", "Username", "Tier", "Level", "Achivements", "Popularity", "Likes"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        scroll_x.pack(side=BOTTOM, fill=X)
+        scroll_y.pack(side=RIGHT, fill=Y)
+        scroll_x.config(command=self.clan_tabel.xview)
+        scroll_y.config(command=self.clan_tabel.yview)
+        self.clan_tabel.heading("Id", text="Id")
+        self.clan_tabel.heading("Username", text="Username")
+        self.clan_tabel.heading("Tier", text="Tier")
+        self.clan_tabel.heading("Level", text="Level")
+        self.clan_tabel.heading("Achivements", text="Achivements")
+        self.clan_tabel.heading("Popularity", text="Popularity")
+        self.clan_tabel.heading("Likes", text="Likes")
+        self.clan_tabel['show'] = 'headings'
+        self.clan_tabel.column('Id', width=105)
+        self.clan_tabel.column('Username', width=105)
+        self.clan_tabel.column('Tier', width=105)
+        self.clan_tabel.column('Level', width=105)
+        self.clan_tabel.column('Achivements', width=105)
+        self.clan_tabel.column('Popularity', width=105)
+        self.clan_tabel.column('Likes', width=105)
+        self.clan_tabel.pack(fill=BOTH, expand=1)
+        self.clan_tabel.bind("<ButtonRelease-1>", self.get_cursor)
+        self.fetch_data()
+
+    def add_members(self):
+        con = mysql.connector.connect(host="localhost", user="root", password="", database="snoobe")
+        cur = con.cursor()
+        cur.execute("insert into values(%s,%s,%s,%s,%s,%s,%s)", (self.Id_var.get(),
+                                                                  self.Username_var.get(),
+                                                                  self.Tier_var.get(),
+                                                                  self.Level_var.get(),
+                                                                  self.Achivements_var.get(),
+                                                                  self.Popularity_var.get(),
+                                                                  self.Likes_var.get()
+                                                                  ))
+        con.commit()
+        self.fetch_data()
+        self.clear()
+        con.close()
+
+    def fetch_data(self):
+        con = mysql.connector.connect(host="localhost", user="root", password="", database="snoobe")
+        cur = con.cursor()
+        cur.execute("select *from clan")
+        rows = cur.fetchall()
+        if len(rows) != 0:
+            self.clan_tabel.delete(*self.clan_tabel.get_children())
+            for row in rows:
+                self.clan_tabel.insert('', END, values=row)
+            con.commit()
+        con.close()
+
+    def clear(self):
+        self.Id_var.set("")
+        self.Username_var.set("")
+        self.Tier_var.set("")
+        self.Level_var.set("")
+        self.Achivements_var.set("")
+        self.Popularity_var.set("")
+        self.Likes_var.set("")
+
+    def get_cursor(self, even):
+        cursor_row = self.clan_tabel.focus()
+        contents = self.clan_tabel.item(cursor_row)
+        row = contents['values']
+        self.Id_var.set(row[0])
+        self.Username_var.set(row[1])
+        self.Tier_var.set(row[2])
+        self.Level_var.set(row[3])
+        self.Achivements_var.set(row[4])
+        self.Popularity_var.set(row[5])
+        self.Likes_var.set(row[6])
+
+    def update_data(self):
+        con = mysql.connector.connect(host="localhost", user="root", password="", database="snoobe")
+        cur = con.cursor()
+        cur.execute("update clan set Username=%s,Tier=%s,Level=%s,Achivements=%s,Popularity=%s,Likes=%s where Id=%s", (
+                                                                          self.Username_var.get(),
+                                                                          self.Tier_var.get(),
+                                                                          self.Level_var.get(),
+                                                                          self.Achivements_var.get(),
+                                                                          self.Popularity_var.get(),
+                                                                          self.Likes_var.get(),
+                                                                          self.Id_var.get()
+                                                                          ))
+        con.commit()
+        self.fetch_data()
+        self.clear()
+        con.close()
+
+    def delete_data(self):
+        con = mysql.connector.connect(host="localhost", user="root", password="", database="snoobe")
+        cur = con.cursor()
+        cur.execute(f'delete from clan where ID={self.Id_var.get()}')
+        con.commit()
+        con.close()
+        self.fetch_data()
+        self.clear()
+
+
+root = Tk()
+obj = ClanData(root)
+root.mainloop()
